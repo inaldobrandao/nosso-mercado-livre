@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NossoMercadoLivre.Models;
 using NossoMercadoLivre.Models.Entities;
 using NossoMercadoLivre.Models.ViewModels;
 using NossoMercadoLivre.Repositories;
@@ -24,7 +25,9 @@ namespace NossoMercadoLivre.Controllers
         {
             if (ModelState.IsValid)
             {
-                User newUser = new User(model.Username, model.Password);
+                DecodedPassword decodedPassword = new DecodedPassword(model.Password);
+
+                User newUser = new User(model.Username, decodedPassword);
                 _userRepository.CreateUser(newUser);
                 return Ok();
             }

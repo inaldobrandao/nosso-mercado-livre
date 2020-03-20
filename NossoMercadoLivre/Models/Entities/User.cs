@@ -11,21 +11,19 @@ namespace NossoMercadoLivre.Models.Entities
         [ExplicitKey]
         public Guid Id { get; }
         
-        [Required]
-        [EmailAddress]
+        [Required, EmailAddress]
         public string Username { get; }
 
-        [Required]
-        [MinLength(6)]
+        [Required, MinLength(6)]
         public string Password { get; }
         public DateTime CreateAt { get; }
 
-        public User(string username, string password)
+        public User([Required, EmailAddress] string username, [Required] DecodedPassword decodedPassword)
         {
             Id = Guid.NewGuid();
             Username = username;
-            Password = UserUtil.GenerateEncryptedPass(this, password); ;
             CreateAt = DateTime.Now.ToUniversalTime();
+            Password = UserUtil.EncodePassword(this, decodedPassword.Password);
         }
     }
 }
