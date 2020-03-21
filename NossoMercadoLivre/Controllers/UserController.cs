@@ -25,11 +25,15 @@ namespace NossoMercadoLivre.Controllers
         {
             if (ModelState.IsValid)
             {
-                DecodedPassword decodedPassword = new DecodedPassword(model.Password);
+                if (!_userRepository.AnyUserByUsername(model.Username))
+                {
+                    DecodedPassword decodedPassword = new DecodedPassword(model.Password);
 
-                User newUser = new User(model.Username, decodedPassword);
-                _userRepository.CreateUser(newUser);
-                return Ok();
+                    User newUser = new User(model.Username, decodedPassword);
+                    _userRepository.CreateUser(newUser);
+                    return Ok();
+                }
+                return BadRequest("Não foi possível realizar cadastro com este email");
             }
             return BadRequest(ModelState);
         }

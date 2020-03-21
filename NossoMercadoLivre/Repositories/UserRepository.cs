@@ -1,7 +1,9 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Microsoft.Extensions.Configuration;
 using NossoMercadoLivre.Models.Entities;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace NossoMercadoLivre.Repositories
 {
@@ -21,6 +23,29 @@ namespace NossoMercadoLivre.Repositories
                 try
                 {
                     connection.Insert(user);
+                }
+                finally
+                {
+                    if (connection != null)
+                        connection.Close();
+                }
+            }
+        }
+
+        public bool AnyUserByUsername(string username)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
+            {
+                try
+                {
+                    return connection.Query<int>(
+                        "SELECT 1 WHERE EXISTS " +
+                        " (SELECT 1 FROM dbo.Users U " +
+                        "WHERE U.Username = @Username) ",
+                    new
+                    {
+                        Username = username
+                    }).Any();
                 }
                 finally
                 {
