@@ -22,7 +22,7 @@ namespace NossoMercadoLivre.Models.Entities
             Id = Guid.NewGuid();
             Username = username;
             CreateAt = DateTime.Now.ToUniversalTime();
-            Password = DecodedPassword.EncodeCleanPassword(this, decodedPassword.Password);
+            Password = decodedPassword.EncodeCleanPassword(this);
         }
     }
 }

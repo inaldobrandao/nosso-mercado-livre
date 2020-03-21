@@ -14,10 +14,10 @@ namespace NossoMercadoLivre.Models
             Password = password;
         }
 
-        public static string EncodeCleanPassword(User user, string password)
+        public string EncodeCleanPassword(User user)
         {
             PasswordHasher<User> pHasher = new PasswordHasher<User>();
-            return pHasher.HashPassword(user, password);
+            return pHasher.HashPassword(user, Password);
         }
     }
 }
