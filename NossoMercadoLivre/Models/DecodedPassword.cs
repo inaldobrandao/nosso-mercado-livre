@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using NossoMercadoLivre.Models.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace NossoMercadoLivre.Models
 {
@@ -10,6 +12,12 @@ namespace NossoMercadoLivre.Models
         public DecodedPassword([Required, MinLength(6)] string password)
         {
             Password = password;
+        }
+
+        public static string EncodeCleanPassword(User user, string password)
+        {
+            PasswordHasher<User> pHasher = new PasswordHasher<User>();
+            return pHasher.HashPassword(user, password);
         }
     }
 }

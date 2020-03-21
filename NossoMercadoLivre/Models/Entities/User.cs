@@ -1,5 +1,4 @@
 ﻿using Dapper.Contrib.Extensions;
-using NossoMercadoLivre.Utils;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,7 +22,7 @@ namespace NossoMercadoLivre.Models.Entities
             Id = Guid.NewGuid();
             Username = username;
             CreateAt = DateTime.Now.ToUniversalTime();
-            Password = UserUtil.EncodePassword(this, decodedPassword.Password);
+            Password = DecodedPassword.EncodeCleanPassword(this, decodedPassword.Password);
         }
     }
 }
