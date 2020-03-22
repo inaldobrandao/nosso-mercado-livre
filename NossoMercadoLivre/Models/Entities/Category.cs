@@ -11,6 +11,8 @@ namespace NossoMercadoLivre.Models.Entities
         [Required]
         public string Name { get; }
         public long? CategoryMotherId { get; }
+        [Computed]
+        public Category CategoryMother { get; }
 
         public Category([Required] string name, long? categoryMotherId)
         {
