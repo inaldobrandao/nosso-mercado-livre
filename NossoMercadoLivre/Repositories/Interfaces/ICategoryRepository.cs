@@ -4,6 +4,6 @@ namespace NossoMercadoLivre.Repositories
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        bool AnyUserByName(string name);
+        bool AnyCategoryByName(string name);
     }
 }

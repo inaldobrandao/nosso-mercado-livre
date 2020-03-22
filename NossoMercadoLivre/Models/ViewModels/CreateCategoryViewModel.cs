@@ -5,7 +5,7 @@ namespace NossoMercadoLivre.Models.ViewModels
     public class CreateCategoryViewModel
     {
         public string Name { get; set; }
-        public long CategoryMotherId { get; set; }
+        public long? CategoryMotherId { get; set; }
 
         public Category ToCategory()
         {

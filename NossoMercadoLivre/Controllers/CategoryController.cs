@@ -23,7 +23,7 @@ namespace NossoMercadoLivre.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Create([FromBody] CreateCategoryViewModel model)
         {
-            if (!_categoryRepository.AnyUserByName(model.Name))
+            if (!_categoryRepository.AnyCategoryByName(model.Name))
             {
                 Category newCategory = model.ToCategory();
                 _categoryRepository.Create(newCategory);

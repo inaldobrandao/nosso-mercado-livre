@@ -14,7 +14,7 @@ namespace NossoMercadoLivre.Repositories
             
         }
 
-        public bool AnyUserByName(string name)
+        public bool AnyCategoryByName(string name)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
             {

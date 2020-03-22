@@ -10,9 +10,9 @@ namespace NossoMercadoLivre.Models.Entities
         public long Id { get; private set; }
         [Required]
         public string Name { get; }
-        public long CategoryMotherId { get; }
+        public long? CategoryMotherId { get; }
 
-        public Category([Required] string name, long categoryMotherId = 0)
+        public Category([Required] string name, long? categoryMotherId)
         {
             Name = name;
             CategoryMotherId = categoryMotherId;
