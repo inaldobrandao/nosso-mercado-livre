@@ -2,9 +2,8 @@
 
 namespace NossoMercadoLivre.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        void CreateUser(User user);
         bool AnyUserByUsername(string username);
     }
 }

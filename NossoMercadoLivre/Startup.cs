@@ -21,6 +21,7 @@ namespace NossoMercadoLivre
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
 
             services.AddSwaggerGen(c =>
             {
