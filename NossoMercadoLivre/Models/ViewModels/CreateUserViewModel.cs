@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NossoMercadoLivre.Models.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace NossoMercadoLivre.Models.ViewModels
 {
@@ -10,5 +11,11 @@ namespace NossoMercadoLivre.Models.ViewModels
         [Required]
         [MinLength(6)]
         public string Password { get; set; }
+
+        public User ToUser()
+        {
+            DecodedPassword decodedPassword = new DecodedPassword(this.Password);
+            return new User(this.Username, decodedPassword);            
+        }
     }
 }
