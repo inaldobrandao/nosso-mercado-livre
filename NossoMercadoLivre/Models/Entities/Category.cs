@@ -14,10 +14,10 @@ namespace NossoMercadoLivre.Models.Entities
         [Computed]
         public Category CategoryMother { get; }
 
-        public Category([Required] string name, long? categoryMotherId)
+        public Category([Required] string name, MotherCategory motherCategory)
         {
             Name = name;
-            CategoryMotherId = categoryMotherId;
+            CategoryMotherId = motherCategory?.CategoryMotherId;
         }
     }
 }
