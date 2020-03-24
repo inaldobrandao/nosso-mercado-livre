@@ -16,7 +16,8 @@ namespace NossoMercadoLivre.Repositories
 
         public bool AnyUserByUsername(string username)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
+            using (SqlConnection connection = new SqlConnection(
+                _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
             {
                 try
                 {
@@ -28,6 +29,27 @@ namespace NossoMercadoLivre.Repositories
                     {
                         Username = username
                     }).Any();
+                }
+                finally
+                {
+                    if (connection != null)
+                        connection.Close();
+                }
+            }
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            using (SqlConnection connection = new SqlConnection(
+                _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
+            {
+                try
+                {
+                    return connection.QueryFirstOrDefault<User>(
+                    "SELECT * " +
+                    "FROM dbo.Users U " +
+                    "WHERE U.Username = @Username ",
+                    new { Username = username });
                 }
                 finally
                 {
