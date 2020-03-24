@@ -26,7 +26,7 @@ namespace NossoMercadoLivre.Controllers
             if (!_userRepository.AnyUserByUsername(model.Username))
             {
                 User newUser = model.ToUser();
-                _userRepository.CreateUser(newUser);
+                _userRepository.Create(newUser);
                 return Ok();
             }
             

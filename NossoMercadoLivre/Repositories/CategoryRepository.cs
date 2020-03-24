@@ -6,15 +6,15 @@ using System.Linq;
 
 namespace NossoMercadoLivre.Repositories
 {
-    public class UserRepository : AbstractRepository<User>, IUserRepository
+    public class CategoryRepository : AbstractRepository<Category>, ICategoryRepository
     {
-        public UserRepository(IConfiguration configuration)
-            :base (configuration)
+        public CategoryRepository(IConfiguration configuration)
+            : base (configuration)
         {
             
         }
 
-        public bool AnyUserByUsername(string username)
+        public bool AnyCategoryByName(string name)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
             {
@@ -22,11 +22,11 @@ namespace NossoMercadoLivre.Repositories
                 {
                     return connection.Query<int>(
                         "SELECT 1 WHERE EXISTS " +
-                        " (SELECT 1 FROM dbo.Users U " +
-                        "WHERE U.Username = @Username) ",
+                        " (SELECT 1 FROM dbo.Categories C " +
+                        "WHERE C.Name = @Name) ",
                     new
                     {
-                        Username = username
+                        Name = name
                     }).Any();
                 }
                 finally
