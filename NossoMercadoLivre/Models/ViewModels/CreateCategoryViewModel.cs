@@ -9,7 +9,11 @@ namespace NossoMercadoLivre.Models.ViewModels
 
         public Category ToCategory()
         {
-            return new Category(Name, MotherCategory);
+            Category category = new Category(Name)
+            {
+                CategoryMotherId = MotherCategory?.CategoryMotherId
+            };
+            return category;
         }
     }
 }
