@@ -11,10 +11,10 @@ namespace NossoMercadoLivre.Models.Entities
         public string Id { get; }
         
         [Required, EmailAddress]
-        public string Username { get; set; }
+        public string Username { get; }
 
         [Required, MinLength(6)]
-        public string Password { get; set; }
+        public string Password { get; }
         public DateTime CreateAt { get; }
 
         [Obsolete]
