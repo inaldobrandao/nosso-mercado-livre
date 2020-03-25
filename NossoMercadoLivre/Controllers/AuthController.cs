@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,7 +15,6 @@ namespace NossoMercadoLivre.Controllers
 {
     [ApiController]
     [Route("api/Auth")]
-    [AllowAnonymous]
     [EnableCors("CorsPolicy")]
     [Produces("application/json")]
     public class AuthController : Base
@@ -35,7 +33,7 @@ namespace NossoMercadoLivre.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody]CredentialsViewModel credentials)
         {
-            var identity = await GetClaimsIdentity(credentials.Username, credentials.Password);
+            var identity = await GetClaimsIdentity(credentials?.Username, credentials?.Password);
             
             if (identity == null)
             {
@@ -45,17 +43,17 @@ namespace NossoMercadoLivre.Controllers
             var response = new
             {
                 id = identity.Claims.Single(c => c.Type == "id").Value,
-                auth_token = await _jwtFactory.GenerateEncodedToken(credentials.Username, identity),
+                auth_token = await _jwtFactory.GenerateEncodedToken(credentials?.Username, identity),
                 expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
             };
 
             return Ok(response);
         }
 
-        private async Task<ClaimsIdentity> GetClaimsIdentity(string username, string password)
+        private async Task<ClaimsIdentity?> GetClaimsIdentity(string? username, string? password)
         {
 
-            User user = _userRepository.GetUserByUsername(username);
+            User? user = _userRepository.GetUserByUsername(username);
 
             if (user != null)
             {
@@ -68,7 +66,7 @@ namespace NossoMercadoLivre.Controllers
                 }
             }
 
-            return await Task.FromResult<ClaimsIdentity>(null);
+            return await Task.FromResult<ClaimsIdentity?>(null);
         }
     }
 }

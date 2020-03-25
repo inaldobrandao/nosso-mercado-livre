@@ -7,9 +7,9 @@ namespace NossoMercadoLivre.Models
     public class DecodedPassword
     {
         [Required, MinLength(6)]
-        public string Password { get; }
+        public string? Password { get; }
 
-        public DecodedPassword([Required, MinLength(6)] string password)
+        public DecodedPassword([Required, MinLength(6)] string? password)
         {
             Password = password;
         }

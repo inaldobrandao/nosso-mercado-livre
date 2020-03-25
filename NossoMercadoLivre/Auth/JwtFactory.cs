@@ -18,15 +18,15 @@ namespace NossoMercadoLivre.Auth
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
+        public async Task<string?> GenerateEncodedToken(string? userName, ClaimsIdentity? identity)
         {
             var claims = new[]
             {
                  new Claim(JwtRegisteredClaimNames.Sub, userName),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                 identity.FindFirst(Constants.Strings.JwtClaimIdentifiers.Rol),
-                 identity.FindFirst(Constants.Strings.JwtClaimIdentifiers.Id)
+                 identity?.FindFirst(Constants.Strings.JwtClaimIdentifiers.Rol),
+                 identity?.FindFirst(Constants.Strings.JwtClaimIdentifiers.Id)
              };
 
             // Create the JWT security token and encode it.
@@ -43,7 +43,7 @@ namespace NossoMercadoLivre.Auth
             return encodedJwt;
         }
 
-        public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
+        public ClaimsIdentity? GenerateClaimsIdentity(string? userName, string? id)
         {
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
