@@ -14,26 +14,24 @@ namespace NossoMercadoLivre.Repositories
             
         }
 
-        public bool AnyCategoryByName(string name)
+        public bool AnyCategoryByName(string? name)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
+            using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
+            try
             {
-                try
+                return connection.Query<int>(
+                    "SELECT 1 WHERE EXISTS " +
+                    " (SELECT 1 FROM dbo.Categories C " +
+                    "WHERE C.Name = @Name) ",
+                new
                 {
-                    return connection.Query<int>(
-                        "SELECT 1 WHERE EXISTS " +
-                        " (SELECT 1 FROM dbo.Categories C " +
-                        "WHERE C.Name = @Name) ",
-                    new
-                    {
-                        Name = name
-                    }).Any();
-                }
-                finally
-                {
-                    if (connection != null)
-                        connection.Close();
-                }
+                    Name = name
+                }).Any();
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
             }
         }
     }

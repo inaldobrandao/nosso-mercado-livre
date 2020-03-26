@@ -9,12 +9,12 @@ namespace NossoMercadoLivre.Models.Entities
         [Dapper.Contrib.Extensions.Key]
         public long Id { get; private set; }
         [Required]
-        public string Name { get; }
+        public string? Name { get; }
         public long? CategoryMotherId { get; set; }
         [Computed]
-        public Category CategoryMother { get; }
+        public Category? CategoryMother { get; }
 
-        public Category([Required] string name)
+        public Category([Required] string? name)
         {
             Name = name;
         }

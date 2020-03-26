@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NossoMercadoLivre.Models.Entities;
 using NossoMercadoLivre.Models.ViewModels;
@@ -6,10 +7,11 @@ using NossoMercadoLivre.Repositories;
 
 namespace NossoMercadoLivre.Controllers
 {
+    [Authorize]
+    [ApiController]
     [Route("api/Category")]
     [Produces("application/json")]
-    [ApiController]
-    public class CategoryController : Controller
+    public class CategoryController : Base
     {
         private readonly ICategoryRepository _categoryRepository;
 

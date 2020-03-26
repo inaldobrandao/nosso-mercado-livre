@@ -2,7 +2,7 @@
 
 namespace NossoMercadoLivre.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Base
     {
         public IActionResult Index()
         {

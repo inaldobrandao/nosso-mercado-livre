@@ -9,7 +9,7 @@ namespace NossoMercadoLivre.Controllers
     [Route("api/User")]
     [Produces("application/json")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : Base
     {
         private readonly IUserRepository _userRepository;
 

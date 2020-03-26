@@ -15,17 +15,15 @@ namespace NossoMercadoLivre.Repositories
 
         public void Create(T entity)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION)))
+            using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
+            try
             {
-                try
-                {
-                    connection.Insert(entity);
-                }
-                finally
-                {
-                    if (connection != null)
-                        connection.Close();
-                }
+                connection.Insert(entity);
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
             }
         }
     }

@@ -8,18 +8,24 @@ namespace NossoMercadoLivre.Models.Entities
     public class User
     {
         [ExplicitKey]
-        public Guid Id { get; }
+        public string? Id { get; }
         
         [Required, EmailAddress]
-        public string Username { get; }
+        public string? Username { get; }
 
         [Required, MinLength(6)]
-        public string Password { get; }
+        public string? Password { get; }
         public DateTime CreateAt { get; }
 
-        public User([Required, EmailAddress] string username, [Required] DecodedPassword decodedPassword)
+        [Obsolete]
+        private User()
         {
-            Id = Guid.NewGuid();
+
+        }
+
+        public User([Required, EmailAddress] string? username, [Required] DecodedPassword decodedPassword)
+        {
+            Id = Guid.NewGuid().ToString();
             Username = username;
             CreateAt = DateTime.Now.ToUniversalTime();
             Password = decodedPassword.EncodeCleanPassword(this);
