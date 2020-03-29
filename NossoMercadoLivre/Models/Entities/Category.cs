@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NossoMercadoLivre.Models.Entities
@@ -7,16 +8,28 @@ namespace NossoMercadoLivre.Models.Entities
     public class Category
     {
         [Dapper.Contrib.Extensions.Key]
-        public long Id { get; private set; }
+        public int Id { get; private set; }
         [Required]
         public string? Name { get; }
-        public long? CategoryMotherId { get; set; }
+        public int? CategoryMotherId { get; private set; }
         [Computed]
-        public Category? CategoryMother { get; }
+        public Category? CategoryMother { get; private set; }
+
+        [Obsolete]
+        public Category()
+        {
+
+        }
 
         public Category([Required] string? name)
         {
             Name = name;
+        }
+
+        public void SetCategoryMother(MotherCategory mother)
+        {
+            CategoryMother = new Category(mother.Name);
+            CategoryMotherId = mother.CategoryMotherId;
         }
     }
 }

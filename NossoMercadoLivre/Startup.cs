@@ -33,6 +33,7 @@ namespace NossoMercadoLivre
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             
@@ -99,7 +100,7 @@ namespace NossoMercadoLivre
                     In = ParameterLocation.Header,
                     Scheme = "bearer"
                 });
-                c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
+                c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();                
             });
 
         }

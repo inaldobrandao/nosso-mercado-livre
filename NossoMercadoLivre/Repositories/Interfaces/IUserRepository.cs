@@ -1,4 +1,5 @@
 ﻿using NossoMercadoLivre.Models.Entities;
+using System.Threading.Tasks;
 
 namespace NossoMercadoLivre.Repositories
 {
@@ -6,5 +7,6 @@ namespace NossoMercadoLivre.Repositories
     {
         bool AnyUserByUsername(string? username);
         User? GetUserByUsername(string? username);
+        Task<User> FindById(string userId);
     }
 }
