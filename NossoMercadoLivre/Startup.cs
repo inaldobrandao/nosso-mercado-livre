@@ -11,6 +11,8 @@ using NossoMercadoLivre.Auth;
 using NossoMercadoLivre.Helpers;
 using NossoMercadoLivre.Models;
 using NossoMercadoLivre.Repositories;
+using NossoMercadoLivre.Services;
+using NossoMercadoLivre.Services.Interfaces;
 using System;
 
 namespace NossoMercadoLivre
@@ -31,10 +33,13 @@ namespace NossoMercadoLivre
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);
 
+            //Services
+            services.AddTransient<IUploadFileService, UploadFileService>();
+            //Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-
+            
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             
             services.Configure<JwtIssuerOptions>(options =>

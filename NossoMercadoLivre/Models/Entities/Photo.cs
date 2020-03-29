@@ -23,9 +23,11 @@ namespace NossoMercadoLivre.Models.Entities
 
         }
 
-        public Photo(string url)
+        public Photo(string url, Product product)
         {
             Url = url;
+            Product = product;
+            ProductId = product.Id;
         }
 
         public void SetProductRelationship(Product product)

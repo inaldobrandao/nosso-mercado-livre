@@ -28,9 +28,9 @@ namespace NossoMercadoLivre.Models.Entities
         [Computed]
         public Category? Category { get; }
         [Computed]
-        public IList<Photo> Photos { get; private set; }
+        public IList<Photo> Photos { get; private set; } = new List<Photo>();
         [Computed]
-        public IList<Characteristic> Characteristics { get; private set; }
+        public IList<Characteristic> Characteristics { get; private set; } = new List<Characteristic>();
 
         [Obsolete]
         public Product()
@@ -56,20 +56,18 @@ namespace NossoMercadoLivre.Models.Entities
 
         public void ToPhotos(IList<string> urlPhotos)
         {
-            Photos = new List<Photo>();
             foreach(var url in urlPhotos)
             {
-                Photo photo = new Photo(url);
+                Photo photo = new Photo(url, this);
                 Photos.Add(photo);
             }
         }
 
         public void ToCharacteristics(IList<CreateCharacteristcViewModel> models)
         {
-            Characteristics = new List<Characteristic>();
             foreach(var model in models)
             {
-                Characteristic characteristic = new Characteristic(model.Name, model.Description);
+                Characteristic characteristic = new Characteristic(model.Name, model.Description, this);
                 Characteristics.Add(characteristic);
             }
         }

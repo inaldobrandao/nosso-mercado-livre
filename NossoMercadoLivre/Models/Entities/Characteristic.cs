@@ -25,10 +25,12 @@ namespace NossoMercadoLivre.Models.Entities
 
         }
 
-        public Characteristic(string name, string description)
+        public Characteristic(string name, string description, Product product)
         {
             Name = name;
             Description = description;
+            Product = product;
+            ProductId = product.Id;
         }
 
         public void SetProductRelationship(Product product)

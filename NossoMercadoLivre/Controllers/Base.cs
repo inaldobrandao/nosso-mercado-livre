@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NossoMercadoLivre.Models.Entities;
+using NossoMercadoLivre.Repositories;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace NossoMercadoLivre.Controllers
 {
@@ -8,6 +11,11 @@ namespace NossoMercadoLivre.Controllers
         protected string GetUserId()
         {
             return User.FindFirstValue("id");
+        }
+
+        protected async Task<User> GetLoggedUser(IUserRepository userRepository)
+        {
+            return await userRepository.FindById(GetUserId());
         }
     }
 }
