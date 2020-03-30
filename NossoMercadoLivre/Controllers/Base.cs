@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NossoMercadoLivre.Models.Entities;
 using NossoMercadoLivre.Repositories;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace NossoMercadoLivre.Controllers
 {
@@ -17,5 +19,12 @@ namespace NossoMercadoLivre.Controllers
         {
             return await userRepository.FindById(GetUserId());
         }
+
+        public Action<Action> Transacao = delegate (Action func)
+        {
+            using TransactionScope transacao = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            func();
+            transacao.Complete();
+        };
     }
 }

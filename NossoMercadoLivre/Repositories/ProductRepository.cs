@@ -16,7 +16,8 @@ namespace NossoMercadoLivre.Repositories
 
         public void Create(Product product)
         {
-            using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
+            using SqlConnection connection = new SqlConnection(
+                _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
             try
             {
                 connection.Insert(product);

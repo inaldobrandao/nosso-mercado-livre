@@ -4,6 +4,7 @@ using NossoMercadoLivre.Models.Entities;
 using NossoMercadoLivre.Models.ViewModels;
 using NossoMercadoLivre.Repositories;
 using NossoMercadoLivre.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -38,10 +39,10 @@ namespace NossoMercadoLivre.Controllers
             User user = await GetLoggedUser(_userRepository);
 
             Product product = await model.ToProduct(user, _categoryRepository, _uploadFileService);
-            
-            using TransactionScope transacao = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-            _productRepository.Create(product);
-            transacao.Complete();
+
+            Transacao(() => {
+                _productRepository.Create(product);
+            });
 
             return Ok();
         }
