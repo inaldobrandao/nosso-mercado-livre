@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NossoMercadoLivre.Helpers;
 using NossoMercadoLivre.Models.Entities;
 using NossoMercadoLivre.Models.ViewModels;
 using NossoMercadoLivre.Repositories;
 using NossoMercadoLivre.Services.Interfaces;
-using System;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace NossoMercadoLivre.Controllers
 {
@@ -17,18 +16,18 @@ namespace NossoMercadoLivre.Controllers
     public class ProductController : Base
     {
         private readonly IProductRepository _productRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly ILoggedHelper _logged;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUploadFileService _uploadFileService;
 
         public ProductController(
             IProductRepository productRepository,
-            IUserRepository userRepository,
+            ILoggedHelper logged,
             ICategoryRepository categoryRepository,
             IUploadFileService uploadFileService)
         {
             _productRepository = productRepository;
-            _userRepository = userRepository;
+            _logged = logged;
             _categoryRepository = categoryRepository;
             _uploadFileService = uploadFileService;
         }
@@ -36,11 +35,13 @@ namespace NossoMercadoLivre.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromForm]CreateProductViewModel model)
         {
-            User user = await GetLoggedUser(_userRepository);
+            Product product = await model.ToProduct(
+                await _logged.GetUser(GetUserId()),
+                _categoryRepository,
+                _uploadFileService
+            );
 
-            Product product = await model.ToProduct(user, _categoryRepository, _uploadFileService);
-
-            Transacao(() => {
+            TransactionHelper.Transacao(() => {
                 _productRepository.Create(product);
             });
 

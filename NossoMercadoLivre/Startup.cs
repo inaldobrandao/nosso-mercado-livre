@@ -34,12 +34,13 @@ namespace NossoMercadoLivre
             services.AddSingleton(signingConfigurations);
 
             //Services
+            services.AddTransient<ILoggedHelper, LoggedHelper>();
             services.AddTransient<IUploadFileService, UploadFileService>();
             //Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            
+
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             
             services.Configure<JwtIssuerOptions>(options =>

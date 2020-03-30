@@ -9,34 +9,25 @@ namespace NossoMercadoLivre.Repositories
     {
         private readonly IConfiguration _configuration;
 
-        public ProductRepository(IConfiguration configuration)           
+        public ProductRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         public void Create(Product product)
         {
-            using SqlConnection connection = new SqlConnection(
-                _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
-            try
+            using var connection = new SqlConnection(_configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
+            connection.Insert(product);
+            foreach (var photo in product.Photos)
             {
-                connection.Insert(product);
-                foreach (var photo in product.Photos)
-                {
-                    photo.SetProductRelationship(product);
-                }
-                connection.Insert(product.Photos);
-                foreach (var characteristic in product.Characteristics)
-                {
-                    characteristic.SetProductRelationship(product);
-                }
-                connection.Insert(product.Characteristics);
+                photo.SetProductRelationship(product.Id);
             }
-            finally
+            connection.Insert(product.Photos);
+            foreach (var characteristic in product.Characteristics)
             {
-                if (connection != null)
-                    connection.Close();
+                characteristic.SetProductRelationship(product.Id);
             }
+            connection.Insert(product.Characteristics);
         }
     }
 }

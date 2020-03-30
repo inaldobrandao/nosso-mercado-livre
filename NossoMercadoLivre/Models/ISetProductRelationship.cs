@@ -4,6 +4,6 @@ namespace NossoMercadoLivre.Models
 {
     public interface ISetProductRelationship
     {
-        void SetProductRelationship(Product product);
+        void SetProductRelationship(int productId);
     }
 }

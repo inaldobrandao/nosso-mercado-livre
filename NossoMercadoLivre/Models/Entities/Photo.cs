@@ -27,13 +27,11 @@ namespace NossoMercadoLivre.Models.Entities
         {
             Url = url;
             Product = product;
-            ProductId = product.Id;
         }
 
-        public void SetProductRelationship(Product product)
+        public void SetProductRelationship(int productId)
         {
-            ProductId = product.Id;
-            Product = product;
+            ProductId = productId;
         }
     }
 }
