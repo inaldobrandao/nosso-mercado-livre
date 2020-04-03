@@ -51,7 +51,7 @@ namespace NossoMercadoLivre.Controllers
                 _uploadFileService
             );
 
-            TransactionHelper.Transacao(() => _productRepository.Create(product));
+            TransactionHelper.Transaction(() => _productRepository.Create(product));
 
             return Ok();
         }
