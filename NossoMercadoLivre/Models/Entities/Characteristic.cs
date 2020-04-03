@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace NossoMercadoLivre.Models.Entities
 {
     [Table("Characteristics")]
-    public class Characteristic : ISetProductRelationship
+    public class Characteristic : AllowRetrieveRelationId
     {
         [Dapper.Contrib.Extensions.Key]
         public int Id { get; }
@@ -14,7 +14,7 @@ namespace NossoMercadoLivre.Models.Entities
         public string Name { get; }
         [Required]
         public string Description { get; }
-        public int ProductId { get; private set; }
+        public int? ProductId { get; private set; }
         [Computed]
         [JsonIgnore]
         public Product Product { get; private set; }
@@ -32,9 +32,12 @@ namespace NossoMercadoLivre.Models.Entities
             Product = product;
         }
 
-        public void SetProductRelationship(int productId)
+        public void GetRelationId()
         {
-            ProductId = productId;
+            if (Product.Id is null)
+                throw new ArgumentException();
+
+            ProductId = Product.Id;
         }
     }
 }

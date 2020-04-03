@@ -1,7 +1,9 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Microsoft.Extensions.Configuration;
 using NossoMercadoLivre.Models.Entities;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace NossoMercadoLivre.Repositories
 {
@@ -20,14 +22,26 @@ namespace NossoMercadoLivre.Repositories
             connection.Insert(product);
             foreach (var photo in product.Photos)
             {
-                photo.SetProductRelationship(product.Id);
+                photo.GetRelationId();
             }
             connection.Insert(product.Photos);
             foreach (var characteristic in product.Characteristics)
             {
-                characteristic.SetProductRelationship(product.Id);
+                characteristic.GetRelationId();
             }
             connection.Insert(product.Characteristics);
+        }
+
+        public async Task<Product> FindById(int productId)
+        {
+            using SqlConnection connection = new SqlConnection(
+                _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));            
+            return await connection.QueryFirstOrDefaultAsync<Product>(
+                "SELECT TOP 1 * " +
+                "FROM dbo.Products P " +
+                "WHERE P.Id = @Id",
+                new { Id = productId }
+            );
         }
     }
 }

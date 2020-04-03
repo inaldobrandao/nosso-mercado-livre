@@ -9,7 +9,7 @@ namespace NossoMercadoLivre.Controllers
     [ApiController]
     [Route("api/Category")]
     [Produces("application/json")]
-    public class CategoryController : Base
+    public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
 

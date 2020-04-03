@@ -10,7 +10,7 @@ namespace NossoMercadoLivre.Models.Entities
     public class Product
     {
         [Dapper.Contrib.Extensions.Key]
-        public int Id { get; private set; }
+        public int? Id { get; private set; }
         [Required]
         public string? Name { get; }
         [Required, Range(0, double.MaxValue), DataType(DataType.Currency)]
