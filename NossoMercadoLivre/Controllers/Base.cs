@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NossoMercadoLivre.Models.Entities;
+using NossoMercadoLivre.Repositories;
+using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace NossoMercadoLivre.Controllers
 {

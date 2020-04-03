@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using NossoMercadoLivre.Models.Entities;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NossoMercadoLivre.Repositories
 {
@@ -27,6 +28,26 @@ namespace NossoMercadoLivre.Repositories
                 {
                     Name = name
                 }).Any();
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
+        }
+
+        public async Task<Category> FindById(int id)
+        {
+            using SqlConnection connection = new SqlConnection(
+                _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
+            try
+            {
+                return await connection.QueryFirstOrDefaultAsync<Category>(
+                    "SELECT * " +
+                    "FROM dbo.Categories C " +
+                    "WHERE C.Id = @Id",
+                    new { Id = id }
+                );
             }
             finally
             {
