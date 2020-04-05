@@ -11,6 +11,7 @@ using NossoMercadoLivre.Auth;
 using NossoMercadoLivre.Helpers;
 using NossoMercadoLivre.Models;
 using NossoMercadoLivre.Repositories;
+using NossoMercadoLivre.Repositories.Interfaces;
 using NossoMercadoLivre.Services;
 using NossoMercadoLivre.Services.Interfaces;
 using System;
@@ -40,6 +41,9 @@ namespace NossoMercadoLivre
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IOpinionRepository, OpinionRepository>();
+
+            services.AddHttpContextAccessor();
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             

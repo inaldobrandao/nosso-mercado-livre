@@ -17,7 +17,7 @@ namespace NossoMercadoLivre.Controllers
     [Route("api/Auth")]
     [EnableCors("CorsPolicy")]
     [Produces("application/json")]
-    public class AuthController : Base
+    public class AuthController : Controller
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtFactory _jwtFactory;

@@ -28,7 +28,7 @@ namespace NossoMercadoLivre.Models.ViewModels
 
         public async Task<Product> ToProduct(User user, ICategoryRepository _categoryRepository, IUploadFileService _uploadFileService)
         {
-            Category category = await _categoryRepository.FindById(CategoryId);
+            Category? category = await _categoryRepository.FindById(CategoryId);
             if (category is null)
             {
                 throw new ArgumentException("Category Not found");

@@ -5,7 +5,7 @@ namespace NossoMercadoLivre.Helpers
 {
     public static class TransactionHelper
     {
-        public static Action<Action> Transacao = delegate (Action func)
+        public static Action<Action> Transaction = delegate (Action func)
         {
             using TransactionScope transacao = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             func();

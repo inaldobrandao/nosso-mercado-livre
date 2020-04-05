@@ -6,6 +6,6 @@ namespace NossoMercadoLivre.Repositories
     public interface ICategoryRepository : IRepository<Category>
     {
         bool AnyCategoryByName(string? name);
-        Task<Category> FindById(int id);
+        Task<Category?> FindById(int id);
     }
 }

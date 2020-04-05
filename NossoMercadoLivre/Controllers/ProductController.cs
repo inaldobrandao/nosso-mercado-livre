@@ -16,18 +16,17 @@ namespace NossoMercadoLivre.Controllers
     public class ProductController : Base
     {
         private readonly IProductRepository _productRepository;
-        private readonly ILoggedHelper _logged;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUploadFileService _uploadFileService;
 
         public ProductController(
-            IProductRepository productRepository,
             ILoggedHelper logged,
+            IProductRepository productRepository,
             ICategoryRepository categoryRepository,
-            IUploadFileService uploadFileService)
+            IUploadFileService uploadFileService
+            ) : base (logged)
         {
             _productRepository = productRepository;
-            _logged = logged;
             _categoryRepository = categoryRepository;
             _uploadFileService = uploadFileService;
         }
@@ -36,14 +35,12 @@ namespace NossoMercadoLivre.Controllers
         public async Task<IActionResult> Create([FromForm]CreateProductViewModel model)
         {
             Product product = await model.ToProduct(
-                await _logged.GetUser(GetUserId()),
+                await UserLogged(),
                 _categoryRepository,
                 _uploadFileService
             );
 
-            TransactionHelper.Transacao(() => {
-                _productRepository.Create(product);
-            });
+            TransactionHelper.Transaction(() => _productRepository.Create(product));
 
             return Ok();
         }

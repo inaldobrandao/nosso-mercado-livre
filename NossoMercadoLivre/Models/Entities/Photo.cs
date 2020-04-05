@@ -6,15 +6,14 @@ using System.ComponentModel.DataAnnotations;
 namespace NossoMercadoLivre.Models.Entities
 {
     [Table("Photos")]
-    public class Photo : ISetProductRelationship
+    public class Photo : AllowRetrieveRelationId
     {
         [Dapper.Contrib.Extensions.Key]
         public int Id { get; private set; }
         [Required]
         public string? Url { get; }
-        public int ProductId { get; private set; }
+        public int? ProductId { get; private set; }
         [Computed]
-        [JsonIgnore]
         public Product Product { get; private set; }
 
         [Obsolete]
@@ -29,9 +28,12 @@ namespace NossoMercadoLivre.Models.Entities
             Product = product;
         }
 
-        public void SetProductRelationship(int productId)
+        public void GetRelationId()
         {
-            ProductId = productId;
+            if (Product.Id is null)
+                throw new InvalidOperationException();
+
+            ProductId = Product.Id;
         }
     }
 }
