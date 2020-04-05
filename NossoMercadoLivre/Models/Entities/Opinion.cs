@@ -18,11 +18,9 @@ namespace NossoMercadoLivre.Models.Entities
         public int Rating { get; }
         public int? ProductId { get; set; }
         [Computed]
-        [JsonIgnore]
         public Product Product { get; set; }
         public string UserId { get; set; }
         [Computed]
-        [JsonIgnore]
         public User User { get; set; }
 
         [Obsolete]

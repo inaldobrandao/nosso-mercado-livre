@@ -14,7 +14,6 @@ namespace NossoMercadoLivre.Models.Entities
         public string? Url { get; }
         public int? ProductId { get; private set; }
         [Computed]
-        [JsonIgnore]
         public Product Product { get; private set; }
 
         [Obsolete]
@@ -32,7 +31,7 @@ namespace NossoMercadoLivre.Models.Entities
         public void GetRelationId()
         {
             if (Product.Id is null)
-                throw new ArgumentException();
+                throw new InvalidOperationException();
 
             ProductId = Product.Id;
         }

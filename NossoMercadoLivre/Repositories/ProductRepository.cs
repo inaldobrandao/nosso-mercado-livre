@@ -32,11 +32,11 @@ namespace NossoMercadoLivre.Repositories
             connection.Insert(product.Characteristics);
         }
 
-        public async Task<Product> FindById(int productId)
+        public async Task<Product?> FindById(int productId)
         {
             using SqlConnection connection = new SqlConnection(
                 _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));            
-            return await connection.QueryFirstOrDefaultAsync<Product>(
+            return await connection.QueryFirstOrDefaultAsync<Product?>(
                 "SELECT TOP 1 * " +
                 "FROM dbo.Products P " +
                 "WHERE P.Id = @Id",

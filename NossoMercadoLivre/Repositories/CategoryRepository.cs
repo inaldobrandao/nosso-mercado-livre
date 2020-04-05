@@ -36,13 +36,13 @@ namespace NossoMercadoLivre.Repositories
             }
         }
 
-        public async Task<Category> FindById(int id)
+        public async Task<Category?> FindById(int id)
         {
             using SqlConnection connection = new SqlConnection(
                 _configuration.GetConnectionString(Constants.DEFAULT_CONNECTION));
             try
             {
-                return await connection.QueryFirstOrDefaultAsync<Category>(
+                return await connection.QueryFirstOrDefaultAsync<Category?>(
                     "SELECT * " +
                     "FROM dbo.Categories C " +
                     "WHERE C.Id = @Id",

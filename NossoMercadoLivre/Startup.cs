@@ -43,6 +43,8 @@ namespace NossoMercadoLivre
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
 
+            services.AddHttpContextAccessor();
+
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
             
             services.Configure<JwtIssuerOptions>(options =>

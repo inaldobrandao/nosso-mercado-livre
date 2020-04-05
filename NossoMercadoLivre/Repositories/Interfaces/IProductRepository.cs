@@ -6,6 +6,6 @@ namespace NossoMercadoLivre.Repositories
     public interface IProductRepository
     {
         void Create(Product product);
-        Task<Product> FindById(int productId);
+        Task<Product?> FindById(int productId);
     }
 }
