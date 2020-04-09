@@ -1,5 +1,4 @@
 ﻿using NossoMercadoLivre.Models.Entities;
-using NossoMercadoLivre.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace NossoMercadoLivre.Models.ViewModels
@@ -13,9 +12,8 @@ namespace NossoMercadoLivre.Models.ViewModels
         [Required]
         public string ProductUrl { get; set; }
 
-        public Question ToQuestion(Product product, User user, IEmailService emailService)
+        public Question ToQuestion(Product product, User user)
         {
-            emailService.Send(Title, Description, user, product.User, ProductUrl);
             return new Question(Title, product, user);
         }
     }

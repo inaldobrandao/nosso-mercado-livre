@@ -40,9 +40,13 @@ namespace NossoMercadoLivre.Controllers
             if (product is null)
                 throw new ArgumentException("Product Not found");
 
-            Question question = model.ToQuestion(product, await UserLogged(), _emailService);
+            User user = await UserLogged();
+
+            Question question = model.ToQuestion(product, user);
 
             _questionRepository.Create(question);
+
+            _emailService.Send(model.Title, model.Description, user, product.User, model.ProductUrl);
 
             return Ok();
         }
