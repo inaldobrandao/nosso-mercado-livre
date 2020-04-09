@@ -1,21 +1,17 @@
 ﻿using Dapper.Contrib.Extensions;
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NossoMercadoLivre.Models.Entities
 {
-    [Table("Opinions")]
-    public class Opinion
+    [Table("Questions")]
+    public class Question
     {
         [Dapper.Contrib.Extensions.Key]
         public int Id { get; private set; }
         [Required]
         public string Title { get; }
-        [Required, MaxLength(500)]
-        public string Description { get; }
-        [Range(1, 5)]
-        public int Rating { get; }
+        public DateTime CreateAt { get; }
         public int? ProductId { get; }
         [Computed]
         public Product Product { get; }
@@ -24,20 +20,19 @@ namespace NossoMercadoLivre.Models.Entities
         public User User { get; }
 
         [Obsolete]
-        public Opinion()
+        public Question()
         {
 
         }
 
-        public Opinion(string title, string description, int rating, Product product, User user)
+        public Question(string title, Product product, User user)
         {
             Title = title;
-            Description = description;
-            Rating = rating;
             ProductId = product.Id;
             Product = product;
             UserId = user.Id;
             User = user;
+            CreateAt = DateTime.Now.ToUniversalTime();
         }
     }
 }

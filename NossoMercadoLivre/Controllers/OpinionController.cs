@@ -31,7 +31,7 @@ namespace NossoMercadoLivre.Controllers
 
 
         [HttpPost("/{productId}/opinion")]
-        public async Task<IActionResult> CreateOpinion(int productId, [FromBody] CreateOpinionViewModel model)
+        public async Task<IActionResult> Create(int productId, [FromBody] CreateOpinionViewModel model)
         {
             Product? product = await _productRepository.FindById(productId);
             if (product is null)
