@@ -22,7 +22,7 @@ namespace NossoMercadoLivre.Models.Entities
         public DateTime CreateAt { get; }
         public string? UserId { get; }
         [Computed]
-        public User User { get; }
+        public User User { get; set; }
         [Required]
         public int CategoryId { get; }
         [Computed]

@@ -19,18 +19,18 @@ namespace NossoMercadoLivre.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly IQuestionRepository _questionRepository;
-        private readonly IEmailService _emailService;
+        private readonly IQuestionEmailService _quesionEmailService;
 
         public QuestionController(
             ILoggedHelper logged,
             IProductRepository productRepository,
             IQuestionRepository questionRepository,
-            IEmailService emailService
+            IQuestionEmailService quesionEmailService
             ) : base (logged)
         {
             _productRepository = productRepository;
             _questionRepository = questionRepository;
-            _emailService = emailService;
+            _quesionEmailService = quesionEmailService;
         }
 
         [HttpPost("/{productId}/question")]
@@ -46,7 +46,7 @@ namespace NossoMercadoLivre.Controllers
 
             _questionRepository.Create(question);
 
-            _emailService.Send(model.Title, model.Description, user, product.User, model.ProductUrl);
+            _quesionEmailService.SendAndSave(model.Title, model.Description, user, question, model.ProductUrl);
 
             return Ok();
         }

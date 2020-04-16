@@ -38,12 +38,15 @@ namespace NossoMercadoLivre
             services.AddTransient<ILoggedHelper, LoggedHelper>();
             services.AddTransient<IUploadFileService, UploadFileService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IQuestionEmailService, QuestionEmailService>();
             //Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
             services.AddTransient<IQuestionRepository, QuestionRepository>();
+            services.AddTransient<IEmailRepository, EmailRepository>();
+           
 
             services.AddHttpContextAccessor();
 
